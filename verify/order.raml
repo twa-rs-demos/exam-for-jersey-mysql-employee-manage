@@ -1,31 +1,10 @@
 #%RAML 0.8
-title: supermarket-api
+title: supermarket-employee-manage-api
 mediaType: application/json
 
-/:
+/employees:
   get:
-    description: 测试根路径
-    responses:
-      200:
-        body:
-          application/json:
-            schema: |
-              {
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "type": "object",
-                "properties": {
-                  "items": {
-                    "type": "string"
-                  }
-                 }
-               }
-            example: |
-              {
-                "items": "/items"
-              }
-/items:
-  get:
-    description: 获取所有的商品列表
+    description: As an admin I can get all employee information so that I can manage them.
     responses:
       200:
         body:
@@ -34,41 +13,45 @@ mediaType: application/json
               {
                 "$schema": "http://json-schema.org/draft-04/schema#",
                 "type": "array",
-                "items": {
+                "employees": {
                   "type": "object",
                   "properties": {
-                    "price": {
-                      "type": "number"
+                    "employee_url": {
+                      "type": "string"
+                    }
+                    "id": {
+                      "type": "integer"
                     },
                     "name": {
                       "type": "string"
                     },
-                    "categoryUri": {
-                      "type": "string"
-                    },
-                    "id": {
+                    "department_id": {
                       "type": "integer"
                     },
-                    "categoryId": {
+                    "role_id": {
+                      "type": "integer"
+                    },
+                    "gender": {
                       "type": "integer"
                      }
                   },
-                  "required": ["price", "name", "categoryUri", "id", "categoryId"]
+                  "required": ["employee_url", "id", "name", "department_id", "gender", "role_id"]
                 }
               }
             example: |
               [
                 {
-                  "price": 10,
-                  "categoryUri": "categories/2",
-                  "name": "apple",
                   "id": 1,
-                  "categoryId": 2
+                  "employee_url": "employees/1",
+                  "name": "Jane Smith",
+                  "department_id": 2,
+                  "role_id": 3,
+                  "gender": "male"
                 }
               ]
 
   post:
-    description: 插入一个商品信息
+    description: As an admin I can create an employee information so that the employee can be managed.
     body:
       application/json:
         schema: |
@@ -76,24 +59,29 @@ mediaType: application/json
             "$schema": "http://json-schema.org/draft-04/schema#",
             "type": "object",
             "properties": {
-              "price": {
-                "type": "number"
-              },
               "name": {
                 "type": "string"
               },
-              "categoryId": {
+              "department_id": {
+                "type": "integer"
+              },
+              "role_id": {
+                "type": "integer"
+              },
+              "gender": {
                 "type": "integer"
                }
             },
-            "required": ["price", "name", "categoryId"]
+            "required": ["name", "department_id", "gender", "role_id"]
           }
         example: |
           {
-            "price": 10,
-            "name": "apple",
-            "categoryId": 2
+            "name": "Jane Smith",
+            "department_id": 2,
+            "role_id": 3,
+            "gender": "male"
           }
+
     responses:
       201:
         body:
@@ -103,96 +91,101 @@ mediaType: application/json
                 "$schema": "http://json-schema.org/draft-04/schema#",
                 "type": "object",
                 "properties": {
-                  "itemUri": {
+                  "employee_url": {
                     "type": "string"
                   }
                 },
-                "required": ["itemUri"]
+                "required": ["employee_url"]
               }
             example: |
               {
-                "itemUri": "items/10"
+                "employee_uri": "employees/3"
               }
 
   /{id}:
     get:
-      description: 根据商品id获取指定商品信息
+      description: As an admin I can get an concrete employee information so I can manage his/her information.
       responses:
         200:
           body:
             application/json:
               schema: |
                 {
-                  "$schema": "http://json-schema.org/draft-04/schema#",
                   "type": "object",
-                  "required": true,
                   "properties": {
-                    "price": {
-                      "type": "number"
+                    "id": {
+                      "type": "integer"
+                    },
+                    "employee_url": {
+                      "type": "string"
                     },
                     "name": {
                       "type": "string"
                     },
-                    "categoryUri": {
-                      "type": "string"
-                    },
-                    "id": {
+                    "department_id": {
                       "type": "integer"
                     },
-                    "categoryId": {
+                    "role_id": {
+                      "type": "integer"
+                    },
+                    "gender": {
                       "type": "integer"
                      }
                   },
-                  "required": ["price", "name", "categoryUri", "id", "categoryId"]
+                  "required": ["employee_url","id", "name", "department_id", "gender", "role_id"]
                 }
               example: |
                 {
-                  "price": 10,
-                  "categoryUri": "categories/2",
-                  "name": "apple",
                   "id": 1,
-                  "categoryId": 2
+                  "employee_url": "employees/1",
+                  "name": "Jane Smith",
+                  "department_id": 2,
+                  "role_id": 3,
+                  "gender": "male"
                 }
 
-    delete:
-      description: 删除指定商品id的商品信息
+    delete: As an admin I can delete an employee when she/he resign.
+      description: delete successfully.
       responses:
         204:
 
     put:
-      description: 更新指定商品id的商品信息
+      description: As an admin I can update an employee information when she/he change role or dempartment.
       body:
         application/json:
-          schema: |
-            {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "type": "object",
-              "required": true,
-              "properties": {
-                "price": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "categoryId": {
-                  "type": "integer"
-                 }
+        schema: |
+          {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
               },
-              "required": ["price", "name", "categoryUri", "id", "categoryId"]
-            }
-          example: |
-            {
-              "price": 10,
-              "name": "apple",
-              "categoryId": 2
-            }
+              "department_id": {
+                "type": "integer"
+              },
+              "role_id": {
+                "type": "integer"
+              },
+              "gender": {
+                "type": "integer"
+               }
+            },
+            "required": ["name", "department_id", "gender", "role_id"]
+          }
+        example: |
+         {
+           "name": "Jane Smith",
+           "department_id": 1,
+           "role_id": 2,
+           "gender": "male"
+          }
       responses:
         204:
 
-/categories:
+/department:
   get:
-    description: 获取所有的分类列表
+    description: As admin, I can get all the departments then I can get dempartments to manage.
     responses:
       200:
         body:
@@ -201,58 +194,47 @@ mediaType: application/json
               {
                 "$schema": "http://json-schema.org/draft-04/schema#",
                 "type": "object",
-                "required": true,
                 "totalCount": {
                   "type": "integer"
                 },
-                "items": {
+                "departments": {
                   "type": "array",
-                  "items": {
+                  "department": {
                     "type": "object",
                     "properties": {
                       "id": {
                         "type": "integer"
                       },
+                      "department_url": {
+                        "type": "string"
+                      }
                       "name": {
                         "type": "string"
                       },
-                      "categoryId": {
-                        "type": "integer"
-                       }
                     },
-                    "required": ["name", "id", "categoryId"]
+                    "required": ["name", "id", "department_url"]
                   }
                 }
               }
             example: |
               {
-                "totalCount": 4,
-                "items": [
+                "totalCount": 2,
+                "departments": [
                   {
-                    "categoryUri": "categories/1",
-                    "name": "all",
+                    "department_url": "departments/1",
+                    "name": "sport",
                     "id": 1
                   },
                   {
-                    "categoryUri": "categories/2",
-                    "name": "fruits",
+                    "department_url": "departments/2",
+                    "name": "cloth",
                     "id": 2
-                  },
-                  {
-                    "categoryUri": "categories/3",
-                    "name": "tools",
-                    "id": 3
-                  },
-                  {
-                    "categoryUri": "categories/4",
-                    "name": "milks",
-                    "id": 4
                   }
                 ]
               }
 
   post:
-    description: 插入一个分类信息
+    description: As an admin, I can create a department, so that employee can be derected to this new department.
     body:
       application/json:
         schema: |
@@ -268,7 +250,7 @@ mediaType: application/json
           }
         example: |
           {
-            "name": "xxxx"
+            "name": "new_department"
           }
     responses:
       201:
@@ -279,7 +261,7 @@ mediaType: application/json
                "$schema": "http://json-schema.org/draft-04/schema#",
                "type": "object",
                "properties": {
-                 "categoryUri": {
+                 "department_url": {
                    "type": "string",
                    "required": true
                  }
@@ -287,11 +269,11 @@ mediaType: application/json
              }
            example: |
              {
-               "categoryUri": "xxxx"
+               "department_url": "departments/9"
              }
   /{id}:
     get:
-      description: 根据分类id获取指定分类信息
+      description: As an admin, I can get a concrete department detail so that I can view and update it.
       responses:
         200:
           body:
@@ -301,39 +283,31 @@ mediaType: application/json
                   "$schema": "http://json-schema.org/draft-04/schema#",
                   "type": "object",
                   "properties": {
-                    "price": {
-                      "type": "number"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "categoryUri": {
-                      "type": "string"
-                    },
                     "id": {
                       "type": "integer"
                     },
-                    "categoryId": {
-                      "type": "integer"
-                     }
+                    "department_url": {
+                      "type": "string"
+                    }
+                    "name": {
+                      "type": "string"
+                    }
                   },
-                  "required": ["price", "name", "categoryUri", "id", "categoryId"]
+                  "required": ["name", "id", "department_url"]
                 }
               example: |
                 {
-                  "price": 10,
-                  "categoryUri": "categories/2",
-                  "name": "apple",
-                  "id": 1,
-                  "categoryId": 2
+                  "department_url": "departments/1",
+                  "name": "sport",
+                  "id": 1
                 }
     delete:
-      description: 删除指定id的分类信息
+      description: As an admin, I can delete a department when the department can not make money.
       responses:
         204:
-          description: 删除成功
+          description: delete successfully
         412:
-          description: 删除失败，该分类下还有商品，不能删除
+          description: delete fail, this department has employee working.
           body:
             application/json:
               schema: |
@@ -349,10 +323,10 @@ mediaType: application/json
                  }
               example: |
                 {
-                  "meaasge": "该分类下还有商品，不能删除"
+                  "meaasge": "delete fail, this department has employee working."
                 }
     put:
-      description: 更新指定id的分类信息
+      description: As an admin, I can update a department information.
       body:
         application/json:
           schema: |
@@ -368,13 +342,14 @@ mediaType: application/json
              }
           example: |
             {
-              "meaasge": "该分类下还有商品，不能删除"
+              "meaasge": "updated_department"
             }
       responses:
         204:
-/carts:
+
+/role:
   get:
-    description: 获取所有的购物车列表
+    description: As an admin, I can get all roles, so I can decide assign which role to a employee
     responses:
       200:
         body:
@@ -385,93 +360,50 @@ mediaType: application/json
                 "type": "object",
                 "properties": {
                   "totalCount": {
-                    "type": "number"
+                    "type": "integer"
                   },
-                  "items": {
+                  "roles": {
                     "type": "array",
                     "properties": {
                       "id": {
-                        "type": "number"
+                        "type": "integer"
                       },
-                      "userId": {
+                      "title": {
                         "type": "string"
                       },
-                      "items": {
-                        "type": "array",
-                        "properties": {
-                          "price": {
-                            "type": "number"
-                          },
-                          "id": {
-                            "type": "integer"
-                          },
-                          "categoryUri": {
-                            "type": "string"
-                          },
-                           "name": {
-                             "type": "string"
-                          },
-                           "categoryId": {
-                             "type": "integer"
-                          }
-                        },
-                        "required": ["price", "categoryId", "name", "categoryUri", "id"]
+                      "role_url": {
+                        "type": "string"
                       }
                     },
-                    "required": ["userId", "items", "id"]
+                    "required": ["role_url", "title", "id"]
                   },
-                  "required": ["totalCount", "items"]
+                  "required": ["totalCount", "roles"]
                 }
               }
             example: |
               {
                 "totalCount": 3,
-                "items": [
+                "roles": [
                   {
                     "id": 1,
-                    "userId": 1,
-                    "items": [
-                      {
-                        "price": 2,
-                        "categoryUri": "categories/3",
-                        "name": "eraser",
-                        "id": 3,
-                        "categoryId": 3
-                      },
-                      {
-                        "price": 6,
-                        "categoryUri": "categories/2",
-                        "name": "orange",
-                        "id": 4,
-                        "categoryId": 2
-                      }
-                    ]
+                    "role_url": "roles/1",
+                    "title": "manager"
                   },
                   {
                     "id": 2,
-                    "userId": 2,
-                    "items": [
-                      {
-                        "price": 10,
-                        "categoryUri": "categories/2",
-                        "name": "apple",
-                        "id": 1,
-                        "categoryId": 2
-                      },
-                      {
-                        "price": 5,
-                        "categoryUri": "categories/3",
-                        "name": "pen",
-                        "id": 2,
-                        "categoryId": 3
-                      }
-                    ]
+                    "role_url": "roles/2",
+                    "title": "staff"
+                  },
+                  {
+                    "id": 3,
+                    "role_url": "roles/3",
+                    "title": "monitor"
                   }
                 ]
               }
 
   post:
-    description: 插入一个购物车信息
+    description: As an admin, I can create a role so that I can assign it to employee
     body:
       application/json:
         schema: |
@@ -479,21 +411,14 @@ mediaType: application/json
             "$schema": "http://json-schema.org/draft-04/schema#",
             "type": "object",
             "properties": {
-              "userId": {
-                "type": "number"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "integer"
-                }
+              "title": {
+                "type": "string"
               }
             }
           }
         example: |
           {
-            "userId": "1",
-            "items": [1, 2, 3]
+            "title": "assistant manager"
           }
     responses:
       201:
@@ -504,18 +429,18 @@ mediaType: application/json
                 "$schema": "http://json-schema.org/draft-04/schema#",
                 "type": "object",
                 "properties": {
-                  "cartUri": {
+                  "role_url": {
                     "type": "string"
                   }
                 }
               }
             example: |
               {
-                "cartUri": "carts/4"
+                "role_url": "roles/4"
               }
   /{id}:
     get:
-      description: 根据购物车id获取指定购物车详细信息
+      description: As an admin, I can get a concrete role then I can edit it.
       responses:
         200:
           body:
@@ -526,70 +451,51 @@ mediaType: application/json
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer"
                     },
-                    "userId": {
-                      "type": "number"
+                    "title": {
+                      "type": "title"
                     },
-                    "items": {
-                      "type": "array",
-                      "properties": {
-                        "price": {
-                          "type": "number"
-                        },
-                        "id": {
-                          "type": "number"
-                        },
-                        "categoryUri": {
-                          "type": "string"
-                        },
-                         "name": {
-                           "type": "string"
-                        },
-                         "categoryId": {
-                           "type": "number"
-                        },
-                        "required": ["price", "categoryId", "name", "categoryUri", "id"]
-                      }
+                    "role_rul": {
+                      "type": "string"
                     }
-                  }
+                  },
+                  "required": ["role_url", "title", "id"]
                 }
               example: |
                 {
                   "id": 1,
-                  "userId": 1,
-                  "items": [
-                    {
-                      "price": 5,
-                      "categoryUri": "categories/3",
-                      "name": "pen",
-                      "id": 2,
-                      "categoryId": 3
-                    },
-                    {
-                      "price": 2,
-                      "categoryUri": "categories/3",
-                      "name": "eraser",
-                      "id": 3,
-                      "categoryId": 3
-                    },
-                    {
-                      "price": 6,
-                      "categoryUri": "categories/2",
-                      "name": "orange",
-                      "id": 4,
-                      "categoryId": 2
-                    }
-                  ]
+                  "role_url": "roles/1",
+                  "title": "manager"
                 }
 
     delete:
-      description: 删除指定id的购物车信息
+      description: As an admin, I can delete a role then useless role can be deleted.
       responses:
         204:
+          description: delete successfully.
+        412:
+          description: delete fail, this role had been assign to employees.
+          body:
+            application/json:
+              schema: |
+                {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "type": "object",
+                  "properties": {
+                    "meaasge": {
+                      "type": "string",
+                      "required": true
+                    }
+                   }
+                 }
+              example: |
+                {
+                  "meaasge": "delete fail, this role had been assign to employees."
+                }
 
     put:
-      description: 更新指定id的购物车信息
+      description: As an admin, I can update role detail.
       body:
         application/json:
           schema: |
@@ -597,21 +503,19 @@ mediaType: application/json
               "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
-                "userId": {
-                  "type": "integer",
-                  "required": true
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
                 }
-               }
-             }
+              },
+              "required": ["id", "title"]
+            }
           example: |
             {
-              "userId": 33
+              "id": 2,
+              "title": "president"
             }
       responses:
         204:
-
-    /items/{id}:
-      delete:
-        description: 删除指定 cart.id 下 items.id 的购物车信息
-        responses:
-          204:
