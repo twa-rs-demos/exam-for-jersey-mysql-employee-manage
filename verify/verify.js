@@ -15,7 +15,7 @@ var employeeId, employeeURI, roleId, roleURI, departmentURI, departmentId;
 
 describe("Test", function () {
   this.timeout(60000);
-  it("POST /employees -> 201", function(done) {
+  it("POST /employees -> 201", function (done) {
     var options = {
       url: endpoint + '/employees',
       method: 'POST',
@@ -28,8 +28,8 @@ describe("Test", function () {
       },
       header: {}
     };
-
-    request(options, function(error, response, body) {
+    
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 201, "Expect 201, got " + response.statusCode);
@@ -37,7 +37,7 @@ describe("Test", function () {
       if (schema != '') {
         // verify response body
         body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           JSON.parse(body);
         }, JSON.SyntaxError, "Invalid JSON: " + body);
         var json = JSON.parse(body);
@@ -53,7 +53,7 @@ describe("Test", function () {
     });
   });
   
-  it("GET /employees/{employeeId} -> 200", function(done) {
+  it("GET /employees/{employeeId} -> 200", function (done) {
     var options = {
       url: endpoint + '/employees/' + employeeId,
       method: 'GET',
@@ -61,8 +61,8 @@ describe("Test", function () {
       body: "",
       header: {}
     };
-
-    request(options, function(error, response, body) {
+    
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
@@ -94,7 +94,7 @@ describe("Test", function () {
       if (schema != '') {
         // verify response body
         body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           JSON.parse(body);
         }, JSON.SyntaxError, "Invalid JSON: " + body);
         var json = JSON.parse(body);
@@ -114,7 +114,7 @@ describe("Test", function () {
       body: '',
       header: {}
     };
-
+    
     request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
@@ -202,7 +202,7 @@ describe("Test", function () {
   });
   
   
-  it("POST /departments -> 201", function(done) {
+  it("POST /departments -> 201", function (done) {
     var options = {
       url: endpoint + '/departments',
       method: 'POST',
@@ -213,7 +213,7 @@ describe("Test", function () {
       header: {}
     };
     
-    request(options, function(error, response, body) {
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 201, "Expect 201, got " + response.statusCode);
@@ -221,7 +221,7 @@ describe("Test", function () {
       if (schema != '') {
         // verify response body
         body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           JSON.parse(body);
         }, JSON.SyntaxError, "Invalid JSON: " + body);
         var json = JSON.parse(body);
@@ -237,7 +237,7 @@ describe("Test", function () {
     });
   });
   
-  it("GET /departments/{departmentId} -> 200", function(done) {
+  it("GET /departments/{departmentId} -> 200", function (done) {
     var options = {
       url: endpoint + '/departments/' + departmentId,
       method: 'GET',
@@ -246,7 +246,7 @@ describe("Test", function () {
       header: {}
     };
     
-    request(options, function(error, response, body) {
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
@@ -269,7 +269,7 @@ describe("Test", function () {
       if (schema != '') {
         // verify response body
         body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           JSON.parse(body);
         }, JSON.SyntaxError, "Invalid JSON: " + body);
         var json = JSON.parse(body);
@@ -371,8 +371,7 @@ describe("Test", function () {
   });
   
   
-  
-  it("POST /roles -> 201", function(done) {
+  it("POST /roles -> 201", function (done) {
     var options = {
       url: endpoint + '/roles',
       method: 'POST',
@@ -383,7 +382,7 @@ describe("Test", function () {
       header: {}
     };
     
-    request(options, function(error, response, body) {
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 201, "Expect 201, got " + response.statusCode);
@@ -391,7 +390,7 @@ describe("Test", function () {
       if (schema != '') {
         // verify response body
         body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
+        assert.doesNotThrow(function () {
           JSON.parse(body);
         }, JSON.SyntaxError, "Invalid JSON: " + body);
         var json = JSON.parse(body);
@@ -407,7 +406,7 @@ describe("Test", function () {
     });
   });
   
-  it("GET /roles/{roleId} -> 200", function(done) {
+  it("GET /roles/{roleId} -> 200", function (done) {
     var options = {
       url: endpoint + '/roles/' + roleId,
       method: 'GET',
@@ -416,7 +415,7 @@ describe("Test", function () {
       header: {}
     };
     
-    request(options, function(error, response, body) {
+    request(options, function (error, response, body) {
       assert.isNull(error);
       assert.isNotNull(response, 'Response');
       assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
@@ -435,58 +434,6 @@ describe("Test", function () {
           },
           "required": ["role_url", "title", "id"]
         }
-      }};
-      if (schema != '') {
-        // verify response body
-        body = (body == '' ? '[empty]' : body);
-        assert.doesNotThrow(function() {
-          JSON.parse(body);
-        }, JSON.SyntaxError, "Invalid JSON: " + body);
-        var json = JSON.parse(body);
-        var result = tv4.validateResult(json, schema);
-        assert.lengthOf(result.missing, 0, "Missing/unresolved JSON schema $refs (" + result.missing && result.missing.join(', ') + ") in schema: " + JSON.stringify(schema, null, 4) + " Error");
-        assert.ok(result.valid, "Got unexpected response body: " + (result.error && result.error.message) + " " + JSON.stringify(schema, null, 4) + " Error");
-      }
-      done();
-    });
-  
-  it("GET /roles -> 200", function (done) {
-    var options = {
-      url: endpoint + '/roles',
-      method: 'GET',
-      qs: {},
-      body: '',
-      header: {}
-    };
-    
-    request(options, function (error, response, body) {
-      assert.isNull(error);
-      assert.isNotNull(response, 'Response');
-      assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
-      var schema = {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "type": "object",
-        "properties": {
-          "totalCount": {
-            "type": "integer"
-          },
-          "roles": {
-            "type": "array",
-            "properties": {
-              "id": {
-                "type": "integer"
-              },
-              "title": {
-                "type": "string"
-              },
-              "role_url": {
-                "type": "string"
-              },
-              "required": ["role_url", "title", "id"]
-            },
-            "required": ["totalCount", "roles"]
-          }
-        }
       };
       if (schema != '') {
         // verify response body
@@ -501,42 +448,97 @@ describe("Test", function () {
       }
       done();
     });
-  });
-  
-  it("PUT /roles/{roleId} -> 204", function (done) {
-    var options = {
-      url: endpoint + '/roles/' + roleId,
-      method: 'PUT',
-      qs: {},
-      body: {
-        "title": "president"
-      },
-      header: {}
-    };
     
-    request(options, function (error, response, body) {
-      assert.isNull(error);
-      assert.isNotNull(response, 'Response');
-      assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
-      done();
+    it("GET /roles -> 200", function (done) {
+      var options = {
+        url: endpoint + '/roles',
+        method: 'GET',
+        qs: {},
+        body: '',
+        header: {}
+      };
+      
+      request(options, function (error, response, body) {
+        assert.isNull(error);
+        assert.isNotNull(response, 'Response');
+        assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
+        var schema = {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "properties": {
+            "totalCount": {
+              "type": "integer"
+            },
+            "roles": {
+              "type": "array",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "role_url": {
+                  "type": "string"
+                },
+                "required": ["role_url", "title", "id"]
+              },
+              "required": ["totalCount", "roles"]
+            }
+          }
+        };
+        if (schema != '') {
+          // verify response body
+          body = (body == '' ? '[empty]' : body);
+          assert.doesNotThrow(function () {
+            JSON.parse(body);
+          }, JSON.SyntaxError, "Invalid JSON: " + body);
+          var json = JSON.parse(body);
+          var result = tv4.validateResult(json, schema);
+          assert.lengthOf(result.missing, 0, "Missing/unresolved JSON schema $refs (" + result.missing && result.missing.join(', ') + ") in schema: " + JSON.stringify(schema, null, 4) + " Error");
+          assert.ok(result.valid, "Got unexpected response body: " + (result.error && result.error.message) + " " + JSON.stringify(schema, null, 4) + " Error");
+        }
+        done();
+      });
     });
-  });
-  
-  it("DELETE /roles/{roleId} -> 204", function (done) {
-    var options = {
-      url: endpoint + '/roles/' + roleId,
-      method: 'DELETE',
-      qs: {},
-      body: "",
-      header: {}
-    };
     
-    request(options, function (error, response, body) {
-      assert.isNull(error);
-      assert.isNotNull(response, 'Response');
-      assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
-      done();
+    it("PUT /roles/{roleId} -> 204", function (done) {
+      var options = {
+        url: endpoint + '/roles/' + roleId,
+        method: 'PUT',
+        qs: {},
+        body: {
+          "title": "president"
+        },
+        header: {}
+      };
+      
+      request(options, function (error, response, body) {
+        assert.isNull(error);
+        assert.isNotNull(response, 'Response');
+        assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
+        done();
+      });
     });
+    
+    it("DELETE /roles/{roleId} -> 204", function (done) {
+      var options = {
+        url: endpoint + '/roles/' + roleId,
+        method: 'DELETE',
+        qs: {},
+        body: "",
+        header: {}
+      };
+      
+      request(options, function (error, response, body) {
+        assert.isNull(error);
+        assert.isNotNull(response, 'Response');
+        assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
+        done();
+      });
+    });
+    
+    
   });
   
   
