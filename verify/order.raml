@@ -2,7 +2,7 @@
 title: supermarket-employee-manage-api
 mediaType: application/json
 
-/employees:
+/employee:
   get:
     description: As an admin I can get all employee information so that I can manage them.
     responses:
@@ -18,7 +18,7 @@ mediaType: application/json
                   "properties": {
                     "employee_url": {
                       "type": "string"
-                    }
+                    },
                     "id": {
                       "type": "integer"
                     },
@@ -33,9 +33,9 @@ mediaType: application/json
                     },
                     "gender": {
                       "type": "integer"
-                     }
-                  },
-                  "required": ["employee_url", "id", "name", "department_id", "gender", "role_id"]
+                    },
+                    "required": ["employee_url", "id", "name", "department_id", "gender", "role_id"]
+                  }
                 }
               }
             example: |
@@ -70,9 +70,9 @@ mediaType: application/json
               },
               "gender": {
                 "type": "integer"
-               }
-            },
-            "required": ["name", "department_id", "gender", "role_id"]
+              },
+              "required": ["name", "department_id", "gender", "role_id"]
+            }
           }
         example: |
           {
@@ -92,10 +92,10 @@ mediaType: application/json
                 "type": "object",
                 "properties": {
                   "employee_url": {
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                   }
-                },
-                "required": ["employee_url"]
+                }
               }
             example: |
               {
@@ -111,13 +111,14 @@ mediaType: application/json
             application/json:
               schema: |
                 {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
                     "employee_url": {
                       "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
                     },
                     "name": {
                       "type": "string"
@@ -130,9 +131,9 @@ mediaType: application/json
                     },
                     "gender": {
                       "type": "integer"
-                     }
-                  },
-                  "required": ["employee_url","id", "name", "department_id", "gender", "role_id"]
+                    },
+                    "required": ["employee_url", "id", "name", "department_id", "gender", "role_id"]
+                  }
                 }
               example: |
                 {
@@ -153,35 +154,35 @@ mediaType: application/json
       description: As an admin I can update an employee information when she/he change role or dempartment.
       body:
         application/json:
-        schema: |
-          {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "department_id": {
-                "type": "integer"
-              },
-              "role_id": {
-                "type": "integer"
-              },
-              "gender": {
-                "type": "integer"
-               }
-            },
-            "required": ["name", "department_id", "gender", "role_id"]
-          }
-        example: |
-         {
-           "name": "Jane Smith",
-           "department_id": 1,
-           "role_id": 2,
-           "gender": "male"
-          }
-      responses:
-        204:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "department_id": {
+                  "type": "integer"
+                },
+                "role_id": {
+                  "type": "integer"
+                },
+                "gender": {
+                  "type": "integer"
+                },
+                "required": ["name", "department_id", "gender", "role_id"]
+              }
+            }
+          example: |
+            {
+              "name": "Jane Smith",
+              "department_id": 1,
+              "role_id": 2,
+              "gender": "male"
+            }
+        responses:
+          204:
 
 /department:
   get:
@@ -207,12 +208,12 @@ mediaType: application/json
                       },
                       "department_url": {
                         "type": "string"
-                      }
+                      },
                       "name": {
                         "type": "string"
                       },
-                    },
-                    "required": ["name", "id", "department_url"]
+                      "required": ["name", "id", "department_url"]
+                    }
                   }
                 }
               }
@@ -288,12 +289,12 @@ mediaType: application/json
                     },
                     "department_url": {
                       "type": "string"
-                    }
+                    },
                     "name": {
                       "type": "string"
-                    }
-                  },
-                  "required": ["name", "id", "department_url"]
+                    },
+                    "required": ["name", "id", "department_url"]
+                  }
                 }
               example: |
                 {
@@ -342,7 +343,7 @@ mediaType: application/json
              }
           example: |
             {
-              "meaasge": "updated_department"
+              "name": "Life Department"
             }
       responses:
         204:
@@ -373,11 +374,11 @@ mediaType: application/json
                       },
                       "role_url": {
                         "type": "string"
-                      }
-                    },
+                      },
                     "required": ["role_url", "title", "id"]
-                  },
+                    },
                   "required": ["totalCount", "roles"]
+                  }
                 }
               }
             example: |
@@ -412,7 +413,8 @@ mediaType: application/json
             "type": "object",
             "properties": {
               "title": {
-                "type": "string"
+                "type": "string",
+                "required": true
               }
             }
           }
@@ -430,7 +432,8 @@ mediaType: application/json
                 "type": "object",
                 "properties": {
                   "role_url": {
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                   }
                 }
               }
@@ -458,9 +461,9 @@ mediaType: application/json
                     },
                     "role_rul": {
                       "type": "string"
-                    }
-                  },
-                  "required": ["role_url", "title", "id"]
+                    },
+                    "required": ["role_url", "title", "id"]
+                  }
                 }
               example: |
                 {
@@ -503,18 +506,14 @@ mediaType: application/json
               "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "integer"
-                },
                 "title": {
-                  "type": "string"
+                  "type": "string",
+                  "required": true
                 }
-              },
-              "required": ["id", "title"]
+              }
             }
           example: |
             {
-              "id": 2,
               "title": "president"
             }
       responses:
