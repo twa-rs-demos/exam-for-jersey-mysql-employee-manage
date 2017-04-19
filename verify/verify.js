@@ -11,7 +11,7 @@ var endpoint = process.env.ENDPOINT;
 
 console.log(endpoint);
 
-var employeeId, employeeURI, roleId, roleURI, orderURI, orderId;
+var employeeId, employeeURI, roleId, roleURI, departmentURI, departmentId;
 
 describe("Test", function () {
   this.timeout(60000);
