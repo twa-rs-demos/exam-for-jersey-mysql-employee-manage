@@ -541,5 +541,94 @@ describe("Test", function () {
     
   });
   
+  it("GET /roles -> 200", function (done) {
+    var options = {
+      url: endpoint + '/roles',
+      method: 'GET',
+      qs: {},
+      body: '',
+      header: {}
+    };
+    
+    request(options, function (error, response, body) {
+      assert.isNull(error);
+      assert.isNotNull(response, 'Response');
+      assert.equal(response.statusCode, 200, "Expect 200, got " + response.statusCode);
+      var schema = {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer"
+          },
+          "roles": {
+            "type": "array",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "role_url": {
+                "type": "string"
+              },
+              "required": ["role_url", "title", "id"]
+            },
+            "required": ["totalCount", "roles"]
+          }
+        }
+      };
+      if (schema != '') {
+        // verify response body
+        body = (body == '' ? '[empty]' : body);
+        assert.doesNotThrow(function () {
+          JSON.parse(body);
+        }, JSON.SyntaxError, "Invalid JSON: " + body);
+        var json = JSON.parse(body);
+        var result = tv4.validateResult(json, schema);
+        assert.lengthOf(result.missing, 0, "Missing/unresolved JSON schema $refs (" + result.missing && result.missing.join(', ') + ") in schema: " + JSON.stringify(schema, null, 4) + " Error");
+        assert.ok(result.valid, "Got unexpected response body: " + (result.error && result.error.message) + " " + JSON.stringify(schema, null, 4) + " Error");
+      }
+      done();
+    });
+  });
+  
+  it("PUT /roles/{roleId} -> 204", function (done) {
+    var options = {
+      url: endpoint + '/roles/' + roleId,
+      method: 'PUT',
+      qs: {},
+      body: {
+        "title": "president"
+      },
+      header: {}
+    };
+    
+    request(options, function (error, response, body) {
+      assert.isNull(error);
+      assert.isNotNull(response, 'Response');
+      assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
+      done();
+    });
+  });
+  
+  it("DELETE /roles/{roleId} -> 204", function (done) {
+    var options = {
+      url: endpoint + '/roles/' + roleId,
+      method: 'DELETE',
+      qs: {},
+      body: "",
+      header: {}
+    };
+    
+    request(options, function (error, response, body) {
+      assert.isNull(error);
+      assert.isNotNull(response, 'Response');
+      assert.equal(response.statusCode, 204, "Expect 204, got " + response.statusCode);
+      done();
+    });
+  });
+  
   
 });
